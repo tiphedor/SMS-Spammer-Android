@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +26,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private final int ACTIVITYRESULT_CONTACTPICKER = 1000;
 
     TextView txtMessages;
+    EditText txtAmmountOfMessages;
 
     int messageSent;
 
@@ -43,6 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         txtPhoneNb = (EditText) findViewById(R.id.txtPhoneNb);
         txtMessage = (EditText) findViewById(R.id.txtMessage);
         txtMessages = (TextView) findViewById(R.id.txtMessages);
+        txtAmmountOfMessages = (EditText) findViewById(R.id.txtAmmountOfMessages);
 
         btnContactPicker.setOnClickListener(this);
         btnStart.setOnClickListener(this);
@@ -82,7 +86,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Intent contactsIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
             startActivityForResult(contactsIntent, ACTIVITYRESULT_CONTACTPICKER);
         } else if(v.getId() == btnStart.getId()) {
-            initTimer();
+            if(txtAmmountOfMessages.getText().toString().equals("") || txtMessage.getText().toString().equals("") || txtPhoneNb.getText().toString().equals("")) {
+                Toast.makeText(this, getString(R.string.errorFillAllFields), Toast.LENGTH_LONG).show();
+            } else {
+                initTimer();
+            }
         } else if(v.getId() == btnStop.getId()) {
             cancelTimer();
         }
@@ -91,7 +99,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void cancelTimer() {
         if(spammingTimer != null && spamming) {
             btnStart.setVisibility(View.VISIBLE);
-            btnStop.setVisibility(View.VISIBLE);
+            btnStop.setVisibility(View.GONE);
 
             txtMessages.setText("");
 
@@ -117,6 +125,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void run() {
                             txtMessages.setText("Messages sent : " + messageSent);
+                            if(messageSent == Integer.parseInt(txtAmmountOfMessages.getText().toString())) {
+                                cancelTimer();
+                            }
                         }
                     });
                 }

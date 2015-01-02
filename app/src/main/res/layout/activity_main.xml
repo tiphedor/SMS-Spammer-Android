@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:text="@string/startButtonLbl"
         android:id="@+id/btnStart"
-        android:layout_below="@+id/txtMessage"
+        android:layout_below="@+id/txtAmmountOfMessages"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/btnContactPicker"
-        android:layout_alignEnd="@+id/btnContactPicker" />
+        android:layout_alignRight="@+id/btnStop"
+        android:layout_alignEnd="@+id/btnStop" />
 
     <Button
         android:layout_width="wrap_content"
@@ -84,5 +84,18 @@
         android:layout_below="@+id/btnStop"
         android:layout_alignRight="@+id/btnStop"
         android:layout_alignEnd="@+id/btnStop" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/ammountOfMessages"
+        android:id="@+id/txtAmmountOfMessages"
+        android:layout_below="@+id/txtMessage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/txtMessage"
+        android:layout_alignEnd="@+id/txtMessage" />
 
 </RelativeLayout>

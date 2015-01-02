@@ -10,5 +10,7 @@
     <string name="startButtonLbl">Start</string>
     <string name="btnStopLbl">Stop</string>
     <string name="txtAnAppBy">github.com/tiphedor</string>
+    <string name="ammountOfMessages">Ammount of message (0 = infinite)</string>
+    <string name="errorFillAllFields">You must fill all fields.</string>
 
 </resources>
