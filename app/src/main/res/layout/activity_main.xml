@@ -74,4 +74,15 @@
         android:layout_alignRight="@+id/btnContactPicker"
         android:layout_alignEnd="@+id/btnContactPicker" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/txtMessages"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnStop"
+        android:layout_alignRight="@+id/btnStop"
+        android:layout_alignEnd="@+id/btnStop" />
+
 </RelativeLayout>

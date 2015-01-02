@@ -1,27 +1,31 @@
 package io.tiph.smsspammer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     Button btnContactPicker, btnStart, btnStop;
     EditText txtPhoneNb,txtMessage;
 
     private final int ACTIVITYRESULT_CONTACTPICKER = 1000;
+
+    TextView txtMessages;
+
+    int messageSent;
 
     private Timer spammingTimer;
     private boolean spamming;
@@ -38,10 +42,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         btnStop = (Button) findViewById(R.id.btnStop);
         txtPhoneNb = (EditText) findViewById(R.id.txtPhoneNb);
         txtMessage = (EditText) findViewById(R.id.txtMessage);
+        txtMessages = (TextView) findViewById(R.id.txtMessages);
 
         btnContactPicker.setOnClickListener(this);
         btnStart.setOnClickListener(this);
         btnStop.setOnClickListener(this);
+
+        btnStop.setVisibility(View.GONE);
 
         smsManager = SmsManager.getDefault();
 
@@ -83,6 +90,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void cancelTimer() {
         if(spammingTimer != null && spamming) {
+            btnStart.setVisibility(View.VISIBLE);
+            btnStop.setVisibility(View.VISIBLE);
+
+            txtMessages.setText("");
+
             spammingTimer.cancel();
             spammingTimer = null;
             spamming = false;
@@ -91,12 +103,22 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public void initTimer() {
         if(spammingTimer == null && !spamming) {
+            messageSent = 0;
+            btnStop.setVisibility(View.VISIBLE);
+            btnStart.setVisibility(View.GONE);
             spamming = true;
             spammingTimer = new Timer();
             spammingTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     smsManager.sendTextMessage(txtPhoneNb.getText().toString(), null, txtMessage.getText().toString(), null, null);
+                    messageSent++;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtMessages.setText("Messages sent : " + messageSent);
+                        }
+                    });
                 }
             },0, 300);
         }
