@@ -1,6 +1,8 @@
 SMS-Spammer-Android
 ===================
 
+[![Build Status](https://travis-ci.org/tiphedor/SMS-Spammer-Android.svg?branch=master)](https://travis-ci.org/tiphedor/SMS-Spammer-Android)
+
 SMS Spamming app for android - for educational purpose only. 
 
 
